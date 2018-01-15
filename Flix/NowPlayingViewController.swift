@@ -28,7 +28,6 @@ class NowPlayingViewController: UIViewController, UITableViewDataSource {
     // Set up alert controller
     self.alertController = UIAlertController(title: "Cannot get Movies", message: "The Internet connection appears to be offline.", preferredStyle: .alert)
     // create an OK action
-    
     let OKAction = UIAlertAction(title: "OK", style: .default) { (action) in
       self.getMovies()
     }
@@ -71,7 +70,6 @@ class NowPlayingViewController: UIViewController, UITableViewDataSource {
         
         // Show error
         self.present(self.alertController, animated: true) { }
-        
         
       } else if let data = data {
         let dataDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
