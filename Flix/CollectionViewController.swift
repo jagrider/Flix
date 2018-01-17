@@ -1,63 +1,74 @@
 //
-//  NowPlayingViewController.swift
+//  CollectionViewController.swift
 //  Flix
 //
-//  Created by Jonathan Grider on 1/14/18.
+//  Created by Jonathan Grider on 1/16/18.
 //  Copyright © 2018 Jonathan Grider. All rights reserved.
 //
 
 import UIKit
 import AlamofireImage
 
-class NowPlayingViewController: UIViewController, UITableViewDataSource {
+class CollectionViewController: UIViewController, UICollectionViewDataSource {
   
-  @IBOutlet weak var tableView: UITableView!
-  @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+  @IBOutlet weak var collectionView: UICollectionView!
   
   var movies: [[String: Any]] = []
-  var filteredMovies: [[String: Any]]!
   var refreshControl: UIRefreshControl!
   var alertController: UIAlertController!
   
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    // Update navbar colors
     updateColors()
     
     // Set up alert controller
     self.alertController = UIAlertController(title: "Cannot get Movies", message: "The Internet connection appears to be offline.", preferredStyle: .alert)
-    // create an OK action
+    
+    // create an OK action & add it to the alertController
     let OKAction = UIAlertAction(title: "OK", style: .default) { (action) in
       self.getMovies()
     }
-    
-    // add the OK action to the alert controller
     alertController.addAction(OKAction)
     
     // Set up refresh controller
     self.refreshControl = UIRefreshControl()
     self.refreshControl.tintColor = .white
-    refreshControl.addTarget(self, action: #selector (NowPlayingViewController.refreshTable(_:)), for: .valueChanged)
-    tableView.insertSubview(refreshControl, at: 0)
+    refreshControl.addTarget(self, action: #selector (CollectionViewController.refreshTable(_:)), for: .valueChanged)
+    collectionView.insertSubview(refreshControl, at: 0)
+    collectionView.dataSource = self
     
-    // Update data source
-    tableView.dataSource = self
-    
-    // Obtain movie data
     getMovies()
-    
   }
   
-  override func didReceiveMemoryWarning() {
-    super.didReceiveMemoryWarning()
+  
+  public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    return movies.count
+  }
+  
+  
+  // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
+  public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PosterCell", for: indexPath) as! PosterCell
+    
+    let movie = movies[indexPath.item]
+    
+    if let posterPathString = movie["poster_path"] as? String {
+      
+      let posterURL = URL(string: MovieKeys.baseURLString + posterPathString)!
+      
+      cell.posterImageView.af_setImage(withURL: posterURL)
+    }
+    
+    return cell
+    
   }
   
   func getMovies() {
     
     // Start the activity indicator
-    activityIndicator.startAnimating()
-    activityIndicator.hidesWhenStopped = true
+    //activityIndicator.startAnimating()
+    //activityIndicator.hidesWhenStopped = true
     
     let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed")!
     let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
@@ -81,15 +92,15 @@ class NowPlayingViewController: UIViewController, UITableViewDataSource {
         self.movies = movies
         
         // Reload your table view data
-        self.tableView.reloadData()
+        self.collectionView.reloadData()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
           // Stop the refresh controller
           self.refreshControl.endRefreshing()
           
           // Stop the activity indicator
-          self.activityIndicator.stopAnimating()
+          //self.activityIndicator.stopAnimating()
           
-          self.tableView.backgroundColor = .darkGray
+          self.collectionView.backgroundColor = .darkGray
           
         }
       }
@@ -98,47 +109,11 @@ class NowPlayingViewController: UIViewController, UITableViewDataSource {
     
   }
   
-  
-  public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return movies.count
+  override func didReceiveMemoryWarning() {
+    super.didReceiveMemoryWarning()
+    // Dispose of any resources that can be recreated.
   }
   
-  public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "MovieCell", for: indexPath) as! MovieCell
-    
-    // Obtain movie information
-    let movie = movies[indexPath.row]
-    let title = movie["title"] as! String
-    let overview = movie["overview"] as! String
-    let posterPathString = movie["poster_path"] as! String
-    let baseURLString = "https://image.tmdb.org/t/p/w500"
-    let posterURL = URL(string: baseURLString + posterPathString)!
-
-    // Set MovieCell fields
-    cell.titleLabel.text = title
-    cell.overviewLabel.text = overview
-    cell.posterImageView.af_setImage(withURL: posterURL)
-    cell.selectionStyle = .none
-    
-    
-    return cell
-  }
-  
-  @objc func refreshTable(_ refreshControl: UIRefreshControl) {
-    getMovies()
-  }
-  
-  
-  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    let cell = sender as! UITableViewCell
-    if let indexPath = tableView.indexPath(for: cell) {
-      let movie = movies[indexPath.row]
-      
-      let detailViewController = segue.destination as! DetailViewController
-      detailViewController.movie = movie
-    }
-    
-  }
   
   func updateColors() {
     
@@ -156,19 +131,16 @@ class NowPlayingViewController: UIViewController, UITableViewDataSource {
     navigationController?.navigationBar.barStyle = .black
     
     // TODO: Update tab bar area
-//    tabBarController?.tabBar.shadowImage = UIImage()
-//    tabBarController?.tabBar.barTintColor = .darkGray
-//    tabBarController?.tabBar.tintColor = .white
-//    tabBarController?.tabBar.barStyle = .black
-    
+    //    tabBarController?.tabBar.shadowImage = UIImage()
+    //    tabBarController?.tabBar.barTintColor = .darkGray
+    //    tabBarController?.tabBar.tintColor = .white
+    //    tabBarController?.tabBar.barStyle = .black
     
     
   }
   
-  override var preferredStatusBarStyle: UIStatusBarStyle {
-    return .lightContent
+  @objc func refreshTable(_ refreshControl: UIRefreshControl) {
+    getMovies()
   }
-  
-  
   
 }
