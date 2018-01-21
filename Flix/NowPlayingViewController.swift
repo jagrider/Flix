@@ -9,8 +9,9 @@
 import UIKit
 import AlamofireImage
 
-class NowPlayingViewController: UIViewController, UITableViewDataSource {
+class NowPlayingViewController: UIViewController, UITableViewDataSource, UISearchBarDelegate {
   
+  @IBOutlet weak var searchBar: UISearchBar!
   @IBOutlet weak var tableView: UITableView!
   @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
   
@@ -35,6 +36,9 @@ class NowPlayingViewController: UIViewController, UITableViewDataSource {
     // add the OK action to the alert controller
     alertController.addAction(OKAction)
     
+    // Set up search bar
+    searchBar.delegate = self
+    
     // Set up refresh controller
     self.refreshControl = UIRefreshControl()
     self.refreshControl.tintColor = .white
@@ -43,6 +47,7 @@ class NowPlayingViewController: UIViewController, UITableViewDataSource {
     
     // Update data source
     tableView.dataSource = self
+    filteredMovies = movies
     
     // Obtain movie data
     getMovies()
@@ -73,12 +78,13 @@ class NowPlayingViewController: UIViewController, UITableViewDataSource {
         
       } else if let data = data {
         let dataDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
-        
+                
         // Get the array of movies & store in global variable
         let movies = dataDictionary["results"] as! [[String: Any]]
         
         // Store the movies in a property to use elsewhere
         self.movies = movies
+        self.filteredMovies = movies
         
         // Reload your table view data
         self.tableView.reloadData()
@@ -98,16 +104,40 @@ class NowPlayingViewController: UIViewController, UITableViewDataSource {
     
   }
   
+  func searchBarSearchButtonClicked(_ searchBar: UISearchBar)  {
+    searchBar.resignFirstResponder()
+  }
+  
+  func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+    self.searchBar.showsCancelButton = true
+  }
+  
+  func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+    searchBar.showsCancelButton = false
+    searchBar.text = ""
+    searchBar.resignFirstResponder()
+  }
+  
+  
+  
+  func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+    // Filter the movie list as needed
+    filteredMovies = searchText.isEmpty ? movies : movies.filter { (item: [String: Any]) -> Bool in
+      return (item["title"] as! String).range(of: searchText, options: .caseInsensitive, range: nil, locale: nil) != nil
+    }
+    tableView.reloadData()
+  }
+  
   
   public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return movies.count
+    return filteredMovies.count
   }
   
   public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "MovieCell", for: indexPath) as! MovieCell
     
     // Obtain movie information
-    let movie = movies[indexPath.row]
+    let movie = filteredMovies[indexPath.row]
     let title = movie["title"] as! String
     let overview = movie["overview"] as! String
     let posterPathString = movie["poster_path"] as! String
@@ -138,6 +168,8 @@ class NowPlayingViewController: UIViewController, UITableViewDataSource {
       detailViewController.movie = movie
     }
     
+    tableView.reloadData()
+    
   }
   
   func updateColors() {
@@ -155,13 +187,13 @@ class NowPlayingViewController: UIViewController, UITableViewDataSource {
     navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor:UIColor.white]
     navigationController?.navigationBar.barStyle = .black
     
-    // TODO: Update tab bar area
-//    tabBarController?.tabBar.shadowImage = UIImage()
-//    tabBarController?.tabBar.barTintColor = .darkGray
-//    tabBarController?.tabBar.tintColor = .white
-//    tabBarController?.tabBar.barStyle = .black
-    
-    
+    // Update tab bar area
+    tabBarController?.tabBar.shadowImage = UIImage()
+    tabBarController?.tabBar.barTintColor = .darkGray        // Sets overall bar tint
+    tabBarController?.tabBar.barStyle = .black               // Sets up general style settings (white or black)
+    tabBarController?.tabBar.tintColor = #colorLiteral(red: 0.08418696511, green: 0.6317023602, blue: 1, alpha: 1)                  // Changes active button color
+    tabBarController?.tabBar.selectedItem?.badgeColor = #colorLiteral(red: 0.08418696511, green: 0.6317023602, blue: 1, alpha: 1)   // Changes active button text
+    tabBarController?.tabBar.unselectedItemTintColor = #colorLiteral(red: 0.942580149, green: 0.942580149, blue: 0.942580149, alpha: 1)    // Changes inactive button color
     
   }
   

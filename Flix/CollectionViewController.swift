@@ -9,7 +9,7 @@
 import UIKit
 import AlamofireImage
 
-class CollectionViewController: UIViewController, UICollectionViewDataSource {
+class CollectionViewController: UIViewController, UICollectionViewDataSource, UISearchBarDelegate {
   
   @IBOutlet weak var collectionView: UICollectionView!
   
@@ -41,7 +41,6 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource {
     getMovies()
   }
   
-  
   public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     return movies.count
   }
@@ -70,7 +69,7 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource {
     //activityIndicator.startAnimating()
     //activityIndicator.hidesWhenStopped = true
     
-    let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed")!
+    let url = URL(string: "https://api.themoviedb.org/3/movie/181808/similar?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed")!
     let request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 10)
     let session = URLSession(configuration: .default, delegate: nil, delegateQueue: OperationQueue.main)
     let task = session.dataTask(with: request) { (data, response, error) in
@@ -130,17 +129,26 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource {
     navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor:UIColor.white]
     navigationController?.navigationBar.barStyle = .black
     
-    // TODO: Update tab bar area
-    //    tabBarController?.tabBar.shadowImage = UIImage()
-    //    tabBarController?.tabBar.barTintColor = .darkGray
-    //    tabBarController?.tabBar.tintColor = .white
-    //    tabBarController?.tabBar.barStyle = .black
-    
-    
+    // Update tab bar area
+    tabBarController?.tabBar.shadowImage = UIImage()
+    tabBarController?.tabBar.barTintColor = .darkGray        // Sets overall bar tint
+    tabBarController?.tabBar.barStyle = .black               // Sets up general style settings (white or black)
+    tabBarController?.tabBar.tintColor = #colorLiteral(red: 0.08418696511, green: 0.6317023602, blue: 1, alpha: 1)                // Changes active button color
+    tabBarController?.tabBar.selectedItem?.badgeColor = #colorLiteral(red: 0.08418696511, green: 0.6317023602, blue: 1, alpha: 1)   // Changes active button text
+    tabBarController?.tabBar.unselectedItemTintColor = #colorLiteral(red: 0.942580149, green: 0.942580149, blue: 0.942580149, alpha: 1)    // Changes inactive button color
   }
   
   @objc func refreshTable(_ refreshControl: UIRefreshControl) {
     getMovies()
   }
+  
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    let cell = sender as! UICollectionViewCell
+    if let indexPath = collectionView.indexPath(for: cell) {
+      let destination = segue.destination as! DetailViewController
+      destination.movie = movies[indexPath.row]
+    }
+  }
+  
   
 }

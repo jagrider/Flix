@@ -77,6 +77,14 @@ class DetailViewController: UIViewController {
     navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor:UIColor.white]
     navigationController?.navigationBar.barStyle = .black
     
+    // Update tab bar area
+    tabBarController?.tabBar.shadowImage = UIImage()
+    tabBarController?.tabBar.barTintColor = .darkGray        // Sets overall bar tint
+    tabBarController?.tabBar.barStyle = .black               // Sets up general style settings (white or black)
+    tabBarController?.tabBar.tintColor = #colorLiteral(red: 0.08418696511, green: 0.6317023602, blue: 1, alpha: 1)                  // Changes active button color
+    tabBarController?.tabBar.selectedItem?.badgeColor = #colorLiteral(red: 0.08418696511, green: 0.6317023602, blue: 1, alpha: 1)   // Changes active button text
+    tabBarController?.tabBar.unselectedItemTintColor = #colorLiteral(red: 0.942580149, green: 0.942580149, blue: 0.942580149, alpha: 1)    // Changes inactive button color
+    
   }
   
 }

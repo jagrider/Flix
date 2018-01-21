@@ -65,7 +65,7 @@ Describe any challenges encountered while building the app.
 
 **Flix** is a movies app displaying box office and top rental DVDs using [The Movie Database API](http://docs.themoviedb.apiary.io/#).
 
-Time spent: **7** hours spent in total
+Time spent: **7.5** hours spent in total
 
 ## User Stories
 
@@ -76,37 +76,36 @@ The following **required** functionality is completed:
 
 The following **optional** features are implemented:
 
-- [ ] User can tap a poster in the collection view to see a detail screen of that movie (+3pts)
+- [x] User can tap a poster in the collection view to see a detail screen of that movie (+3pts)
 - [ ] In the detail view, when the user taps the poster, a new screen is presented modally where they can view the trailer (+3pts)
 - [x] Customize the navigation bar (+1pt)
-- [ ] List in any optionals you didn't finish from last week (+1-3pts)
-- ...
-- ...
+- [x] User can search for a movie (TableView) (+3pt)
 
 The following **additional** features are implemented:
 
 - [x] Auto-Layout support for compatibility with iPhone 6 and newer (Includes iPhone SE) (+1-3pts)
+- [x] CollectionView displays Sci-Fi movies similar to "Star Wars: The Last Jedi" (+1-3pts)
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
-1.
-2.
+1. Adding a search bar to the Collection View tab
+2. Adding another tab for categorical searching of movies (Action, Comedy, etc)
 
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='Flix_Demo_2.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+I had a decent amount of difficulty with chaning the colors of the tab bar item text and image colors.
 
 ## License
 
-Copyright 2018 Jonathan
+Copyright 2018 Jonathan Grider
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
