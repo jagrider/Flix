@@ -49,6 +49,10 @@ class NowPlayingViewController: UIViewController, UITableViewDataSource, UISearc
     tableView.dataSource = self
     filteredMovies = movies
     
+    // Set up expanding table view cells
+    tableView.rowHeight = UITableViewAutomaticDimension
+    tableView.estimatedRowHeight = 50
+    
     // Obtain movie data
     getMovies()
     

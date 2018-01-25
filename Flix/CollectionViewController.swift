@@ -149,6 +149,4 @@ class CollectionViewController: UIViewController, UICollectionViewDataSource, UI
       destination.movie = movies[indexPath.row]
     }
   }
-  
-  
 }
