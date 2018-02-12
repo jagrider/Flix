@@ -18,6 +18,8 @@
 		F580BBDD2006C723008259E0 /* FlixUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F580BBDC2006C723008259E0 /* FlixUITests.swift */; };
 		F588D69C200C23950037757B /* NowPlayingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F588D69B200C23950037757B /* NowPlayingViewController.swift */; };
 		F588D69E200C2E640037757B /* MovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F588D69D200C2E640037757B /* MovieCell.swift */; };
+		F5BE1979202BBE6500D45E44 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5BE1978202BBE6500D45E44 /* Movie.swift */; };
+		F5BE197B202BC93300D45E44 /* MovieApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5BE197A202BC93300D45E44 /* MovieApiManager.swift */; };
 		F5CD8858200ED70600CF7A78 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CD8857200ED70600CF7A78 /* DetailViewController.swift */; };
 		F5CD885A200EEE4B00CF7A78 /* PosterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CD8859200EEE4B00CF7A78 /* PosterCell.swift */; };
 		F5CD885C200EEEC200CF7A78 /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5CD885B200EEEC200CF7A78 /* CollectionViewController.swift */; };
@@ -64,6 +66,8 @@
 		F580BBDE2006C723008259E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F588D69B200C23950037757B /* NowPlayingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowPlayingViewController.swift; sourceTree = "<group>"; };
 		F588D69D200C2E640037757B /* MovieCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCell.swift; sourceTree = "<group>"; };
+		F5BE1978202BBE6500D45E44 /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
+		F5BE197A202BC93300D45E44 /* MovieApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieApiManager.swift; sourceTree = "<group>"; };
 		F5CD8857200ED70600CF7A78 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		F5CD8859200EEE4B00CF7A78 /* PosterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterCell.swift; sourceTree = "<group>"; };
 		F5CD885B200EEEC200CF7A78 /* CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
@@ -145,16 +149,15 @@
 		F580BBBB2006C723008259E0 /* Flix */ = {
 			isa = PBXGroup;
 			children = (
+				F5BE1976202BBE3800D45E44 /* Table Cells */,
+				F5BE1974202BBCC100D45E44 /* View Controllers */,
 				F580BBBC2006C723008259E0 /* AppDelegate.swift */,
-				F588D69B200C23950037757B /* NowPlayingViewController.swift */,
 				F580BBC02006C723008259E0 /* Main.storyboard */,
 				F580BBC32006C723008259E0 /* Assets.xcassets */,
 				F580BBC52006C723008259E0 /* LaunchScreen.storyboard */,
 				F580BBC82006C723008259E0 /* Info.plist */,
-				F588D69D200C2E640037757B /* MovieCell.swift */,
-				F5CD8857200ED70600CF7A78 /* DetailViewController.swift */,
-				F5CD8859200EEE4B00CF7A78 /* PosterCell.swift */,
-				F5CD885B200EEEC200CF7A78 /* CollectionViewController.swift */,
+				F5BE1978202BBE6500D45E44 /* Movie.swift */,
+				F5BE197A202BC93300D45E44 /* MovieApiManager.swift */,
 			);
 			path = Flix;
 			sourceTree = "<group>";
@@ -175,6 +178,25 @@
 				F580BBDE2006C723008259E0 /* Info.plist */,
 			);
 			path = FlixUITests;
+			sourceTree = "<group>";
+		};
+		F5BE1974202BBCC100D45E44 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				F588D69B200C23950037757B /* NowPlayingViewController.swift */,
+				F5CD8857200ED70600CF7A78 /* DetailViewController.swift */,
+				F5CD885B200EEEC200CF7A78 /* CollectionViewController.swift */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		F5BE1976202BBE3800D45E44 /* Table Cells */ = {
+			isa = PBXGroup;
+			children = (
+				F588D69D200C2E640037757B /* MovieCell.swift */,
+				F5CD8859200EEE4B00CF7A78 /* PosterCell.swift */,
+			);
+			path = "Table Cells";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -472,10 +494,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F5BE1979202BBE6500D45E44 /* Movie.swift in Sources */,
 				F5CD885C200EEEC200CF7A78 /* CollectionViewController.swift in Sources */,
 				F588D69C200C23950037757B /* NowPlayingViewController.swift in Sources */,
 				F5CD885A200EEE4B00CF7A78 /* PosterCell.swift in Sources */,
 				F580BBBD2006C723008259E0 /* AppDelegate.swift in Sources */,
+				F5BE197B202BC93300D45E44 /* MovieApiManager.swift in Sources */,
 				F588D69E200C2E640037757B /* MovieCell.swift in Sources */,
 				F5CD8858200ED70600CF7A78 /* DetailViewController.swift in Sources */,
 			);
@@ -644,12 +668,14 @@
 			baseConfigurationReference = B60732209DC0E1D9E3C37490 /* Pods-Flix.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = TWSS92LN5D;
 				INFOPLIST_FILE = Flix/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jagrider.Flix;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -660,12 +686,14 @@
 			baseConfigurationReference = 95A2B20F047DAFF0A6592D7D /* Pods-Flix.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = TWSS92LN5D;
 				INFOPLIST_FILE = Flix/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jagrider.Flix;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
